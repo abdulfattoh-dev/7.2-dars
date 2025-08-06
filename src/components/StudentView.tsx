@@ -1,4 +1,4 @@
-import React, { useState, type Dispatch, type FC, type SetStateAction } from 'react'
+import React, { useEffect, useState, type Dispatch, type FC, type SetStateAction } from 'react'
 import maleImage from "../assets/male.png";
 import femaleImage from "../assets/female.png";
 import { type IData } from '../types';
@@ -13,7 +13,11 @@ interface IProps {
 }
 
 const StudentView: FC<IProps> = ({ students, handleDelete, setUpdateStudent }) => {
-    const [style, setStyle] = useState(true)
+    const [style, setStyle] = useState<boolean>(JSON.parse(localStorage.getItem('style') || 'true'))
+
+    useEffect(() => {
+        localStorage.setItem('style', JSON.stringify(style))
+    }, [style])
 
     return (
         <>
