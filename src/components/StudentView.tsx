@@ -1,4 +1,4 @@
-import React, { type FC } from 'react'
+import React, { type Dispatch, type FC, type SetStateAction } from 'react'
 import maleImage from "../assets/male.png";
 import femaleImage from "../assets/female.png";
 import { type IData } from '../types';
@@ -6,10 +6,10 @@ import { type IData } from '../types';
 interface IProps {
     students: IData[]
     handleDelete: (id: number) => void
-    handleUpdate: (student: IData) => void
+    setUpdateStudent: Dispatch<SetStateAction<IData | null>>
 }
 
-const StudentView: FC<IProps> = ({ students, handleDelete, handleUpdate }) => {
+const StudentView: FC<IProps> = ({ students, handleDelete, setUpdateStudent }) => {
     return (
         <>
             <div>
@@ -34,7 +34,7 @@ const StudentView: FC<IProps> = ({ students, handleDelete, handleUpdate }) => {
                                     <button onClick={() => handleDelete(student.id)} className="py-0.5 border rounded-lg text-sm flex-1 text-red-500">
                                         Delete
                                     </button>
-                                    <button onClick={() => handleUpdate(student)} className="py-0.5 border rounded-lg text-sm flex-1 text-green-700">
+                                    <button onClick={() => setUpdateStudent(student)} className="py-0.5 border rounded-lg text-sm flex-1 text-green-700">
                                         Update
                                     </button>
                                 </div>

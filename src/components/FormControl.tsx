@@ -1,23 +1,29 @@
-import React, { type Dispatch, type FC, type FormEvent, type SetStateAction } from 'react'
+import React, { useEffect, useState, type Dispatch, type FC, type FormEvent, type SetStateAction } from 'react'
 import { type IData } from '../types'
 
 interface IProps {
     setStudents: Dispatch<SetStateAction<IData[]>>
-    updateStudent: IData
-    fname: string
-    setFname: Dispatch<SetStateAction<string>>
-    profession: string
-    setProfession: Dispatch<SetStateAction<string>>
-    gender: string
-    setGender: Dispatch<SetStateAction<string>>
-    setUpdateStudent: Dispatch<SetStateAction<IData>>
+    updateStudent: IData | null
+    setUpdateStudent: Dispatch<SetStateAction<IData | null>>
 }
 
-const FormControl: FC<IProps> = ({ setStudents, updateStudent, fname, setFname, profession, setProfession, gender, setGender, setUpdateStudent }) => {
+const FormControl: FC<IProps> = ({ setStudents, updateStudent, setUpdateStudent }) => {
+    const [fname, setFname] = useState<string>('')
+    const [profession, setProfession] = useState<string>('')
+    const [gender, setGender] = useState<string>('')
+
+    useEffect(() => {
+        if (updateStudent) {
+            setFname(updateStudent.fname);
+            setProfession(updateStudent.profession);
+            setGender(updateStudent.gender);
+        }
+    }, [updateStudent])
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (updateStudent.id > 0) {
+        if (updateStudent) {
             setStudents((students) =>
                 students.map((student) =>
                     student.id === updateStudent.id
@@ -26,12 +32,7 @@ const FormControl: FC<IProps> = ({ setStudents, updateStudent, fname, setFname, 
                 )
             );
 
-            setUpdateStudent({
-                id: -1,
-                fname: '',
-                profession: '',
-                gender: ''
-            });
+            setUpdateStudent(null);
         } else {
             const newStudent: IData = {
                 id: Date.now(),
@@ -85,7 +86,7 @@ const FormControl: FC<IProps> = ({ setStudents, updateStudent, fname, setFname, 
                     </option>
                 </select>
                 <button className="border cursor-pointer hover:opacity-60 border-slate-700 rounded-lg py-2 px-4 bg-slate-900">
-                    {updateStudent.id > 0 ? "Save" : "Submit"}
+                    {updateStudent ? "Save" : "Submit"}
                 </button>
             </form>
         </div>
