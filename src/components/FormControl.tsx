@@ -58,6 +58,7 @@ const FormControl: FC<IProps> = ({ setStudents, updateStudent, setUpdateStudent 
             <h2 className="text-xl mb-4">Create Student</h2>
             <form onSubmit={handleSubmit} className=" grid md:grid-cols-2 gap-4 " action="">
                 <input
+                    required
                     name="fname"
                     value={formStudent.fname}
                     onChange={handleChange}
@@ -66,6 +67,7 @@ const FormControl: FC<IProps> = ({ setStudents, updateStudent, setUpdateStudent 
                     placeholder="full name"
                 />
                 <input
+                    required
                     name="profession"
                     value={formStudent.profession}
                     onChange={handleChange}
@@ -74,6 +76,7 @@ const FormControl: FC<IProps> = ({ setStudents, updateStudent, setUpdateStudent 
                     placeholder="profession"
                 />
                 <select
+                    required
                     name="gender"
                     value={formStudent.gender}
                     onChange={handleChange}
