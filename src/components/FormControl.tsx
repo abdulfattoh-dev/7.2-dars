@@ -7,16 +7,19 @@ interface IProps {
     setUpdateStudent: Dispatch<SetStateAction<IData | null>>
 }
 
+const initialState: IData = {
+    id: -1,
+    fname: '',
+    profession: '',
+    gender: ''
+}
+
 const FormControl: FC<IProps> = ({ setStudents, updateStudent, setUpdateStudent }) => {
-    const [fname, setFname] = useState<string>('')
-    const [profession, setProfession] = useState<string>('')
-    const [gender, setGender] = useState<string>('')
+    const [formStudent, setFormStudent] = useState<IData>(initialState)
 
     useEffect(() => {
         if (updateStudent) {
-            setFname(updateStudent.fname);
-            setProfession(updateStudent.profession);
-            setGender(updateStudent.gender);
+            setFormStudent(updateStudent)
         }
     }, [updateStudent])
 
@@ -27,7 +30,7 @@ const FormControl: FC<IProps> = ({ setStudents, updateStudent, setUpdateStudent 
             setStudents((students) =>
                 students.map((student) =>
                     student.id === updateStudent.id
-                        ? { ...student, fname, profession, gender }
+                        ? { ...student, ...formStudent }
                         : student
                 )
             );
@@ -35,19 +38,20 @@ const FormControl: FC<IProps> = ({ setStudents, updateStudent, setUpdateStudent 
             setUpdateStudent(null);
         } else {
             const newStudent: IData = {
-                id: Date.now(),
-                fname,
-                profession,
-                gender
+                ...formStudent,
+                id: Date.now()
             };
 
             setStudents((students) => [...students, newStudent]);
         }
 
-        setFname('');
-        setProfession('');
-        setGender('');
+        setFormStudent(initialState)
     };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { value, name } = e.target;
+        setFormStudent((p) => ({ ...p, [name]: value }));
+    }
 
     return (
         <div className="mb-10 bg-slate-800 p-6 rounded-xl">
@@ -55,24 +59,24 @@ const FormControl: FC<IProps> = ({ setStudents, updateStudent, setUpdateStudent 
             <form onSubmit={handleSubmit} className=" grid md:grid-cols-2 gap-4 " action="">
                 <input
                     name="fname"
-                    value={fname}
-                    onChange={(e) => setFname(e.target.value)}
+                    value={formStudent.fname}
+                    onChange={handleChange}
                     className="border bg-slate-700 border-slate-500 rounded-lg py-2 px-4 "
                     type="text"
                     placeholder="full name"
                 />
                 <input
                     name="profession"
-                    value={profession}
-                    onChange={(e) => setProfession(e.target.value)}
+                    value={formStudent.profession}
+                    onChange={handleChange}
                     className="border bg-slate-700 border-slate-500 rounded-lg py-2 px-4 "
                     type="text"
                     placeholder="profession"
                 />
                 <select
                     name="gender"
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
+                    value={formStudent.gender}
+                    onChange={handleChange}
                     className="border bg-slate-700 border-slate-500 rounded-lg py-2 px-4"
                 >
                     <option value="" hidden>
