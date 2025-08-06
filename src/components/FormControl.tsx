@@ -1,4 +1,4 @@
-import React, { useState, type Dispatch, type FC, type FormEvent, type SetStateAction } from 'react'
+import React, { type Dispatch, type FC, type FormEvent, type SetStateAction } from 'react'
 import { type IData } from '../types'
 
 interface IProps {
