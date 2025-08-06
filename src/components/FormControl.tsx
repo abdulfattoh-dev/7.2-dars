@@ -4,22 +4,20 @@ import { type IData } from '../types'
 interface IProps {
     setStudents: Dispatch<SetStateAction<IData[]>>
     updateStudent: IData
+    fname: string
+    setFname: Dispatch<SetStateAction<string>>
+    profession: string
+    setProfession: Dispatch<SetStateAction<string>>
+    gender: string
+    setGender: Dispatch<SetStateAction<string>>
+    setUpdateStudent: Dispatch<SetStateAction<IData>>
 }
 
-const FormControl: FC<IProps> = ({ setStudents, updateStudent }) => {
-    const [fname, setFname] = useState<string>('')
-    const [profession, setProfession] = useState<string>('')
-    const [gender, setGender] = useState<string>('')
-    // const [editingItem, setEditingItem] = useState(null)
-
+const FormControl: FC<IProps> = ({ setStudents, updateStudent, fname, setFname, profession, setProfession, gender, setGender, setUpdateStudent }) => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (updateStudent.id > 0) {
-            setFname(updateStudent.fname);
-            setProfession(updateStudent.profession);
-            setGender(updateStudent.gender);
-
             setStudents((students) =>
                 students.map((student) =>
                     student.id === updateStudent.id
@@ -28,7 +26,12 @@ const FormControl: FC<IProps> = ({ setStudents, updateStudent }) => {
                 )
             );
 
-            // setupdateStudent(null);
+            setUpdateStudent({
+                id: -1,
+                fname: '',
+                profession: '',
+                gender: ''
+            });
         } else {
             const newStudent: IData = {
                 id: Date.now(),

@@ -12,6 +12,10 @@ const Main = () => {
         gender: ''
     })
 
+    const [fname, setFname] = useState<string>('')
+    const [profession, setProfession] = useState<string>('')
+    const [gender, setGender] = useState<string>('')
+
 
     const handleDelete = (id: number) => {
         setStudents((students) => students.filter((student) => student.id != id))
@@ -19,11 +23,15 @@ const Main = () => {
 
     const handleUpdate = (student: IData) => {
         setUpdateStudent(student)
+
+        setFname(student.fname);
+        setProfession(student.profession);
+        setGender(student.gender);
     }
 
     return (
         <div className="container mx-auto py-10 min-h-screen text-white">
-            <FormControl setStudents={setStudents} updateStudent={updateStudent} />
+            <FormControl setStudents={setStudents} updateStudent={updateStudent} fname={fname} setFname={setFname} profession={profession} setProfession={setProfession} gender={gender} setGender={setGender} setUpdateStudent={setUpdateStudent} />
             <StudentView students={students} handleDelete={handleDelete} handleUpdate={handleUpdate} />
         </div>
     )
