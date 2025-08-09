@@ -26,7 +26,7 @@ const StudentView: FC<IProps> = ({ students, handleDelete, setUpdateStudent }) =
             <div className='flex justify-between items-center mb-4'>
                 <h2 className="text-xl">All Students</h2>
                 <button onClick={() => setStyle(!style)} className='p-3 rounded-lg bg-slate-700 flex justify-center items-center hover:bg-slate-600'>{style ? <PiCardsBold /> : <MdTableRows />}</button>
-            </div>
+            </div>students
             {
                 style ? (
                     <div>

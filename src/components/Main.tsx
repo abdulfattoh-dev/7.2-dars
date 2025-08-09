@@ -12,6 +12,10 @@ const Main = () => {
     }, [students])
 
     const handleDelete = (id: number) => {
+        if (updateStudent?.id == id) {
+            setUpdateStudent(null)
+        }
+
         setStudents((students) => students.filter((student) => student.id != id))
     }
 
